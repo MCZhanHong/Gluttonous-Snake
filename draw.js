@@ -5,7 +5,7 @@ function Rect(x,y,w,h,cr){
 	this.x=x;
 	this.y=y;
 	this.w=w;
-	this.h-h;
+	this.h=h;
 	this.cr=cr;
 }
 //画方块的方法
@@ -23,8 +23,8 @@ function Snake(){
 	var snakeArr=[];
 	for(var i=0;i<4;i++){
 		var rect=new Rect(i*20,0,20,20,"gray");
-		//snakeArr.splice(0,0,rect);
-		snakeArr.push(rect);
+		snakeArr.splice(0,0,rect);
+		//snakeArr.push(rect);
 	}
 	//蛇头
 	var head=snakeArr[0];
@@ -32,7 +32,7 @@ function Snake(){
 	this.head=snakeArr[0];
 	this.snakeArr=snakeArr;
 	//初始化方向 37左38上39右40下
-	this.direction=37;
+	this.direction=39;
 }
 Snake.prototype.draw=function(){
 	for(var i=0;i<this.snakeArr.length;i++){
@@ -40,9 +40,9 @@ Snake.prototype.draw=function(){
 	}
 }
 Snake.prototype.move=function(){
-	var rect=new Rect(this,head.x,this.head.y,this.head.w,this.head.h,"gray");
-	this.snake.splice(1,0,rect);
-	if(isEat){
+	var rect=new Rect(this.head.x,this.head.y,this.head.w,this.head.h,"gray");
+	this.snakeArr.splice(1,0,rect);
+	if(isEat()){
 		food=new getRandomFood();
 	}else{
 		this.snakeArr.pop();
@@ -58,7 +58,7 @@ Snake.prototype.move=function(){
 			this.head.y-=this.head.h;
 			break;
 		case 40:
-			this,head,y+=this.head.h;
+			this.head.y+=this.head.h;
 			break;
 		default:
 			break;
@@ -67,7 +67,7 @@ Snake.prototype.move=function(){
 	if(this.head.x>canvas.width||this.head.x<0||this.head.y>canvas.height||this.head.y<0){
 		clearInterval(timer);
 	}
-	for(var i=1;i<snakeArr.length;i++){
+	for(var i=1;i<this.snakeArr.length;i++){
 		if(this.snakeArr[i].x==this.head.x&&this.snakeArr[i].y==this.head.y)
 			clearInterval(timer);
 	}
@@ -123,8 +123,8 @@ function getRandomFood(){
 	//食物随机出现
 	while(isOnSnake){
 		isOnSnake=false;
-		var indexX=getNumberInRanger(0,canvas.width/20-1);
-		var indexY=getNumberInRanger(0,canvas.height/20-1);
+		var indexX=getNumberInRange(0,canvas.width/20-1);
+		var indexY=getNumberInRange(0,canvas.height/20-1);
 		var rect=new Rect(indexX*20,indexY*20,20,20,"green");
 		for(var i=0;i<snake.snakeArr.length;i++){
 			if(snake.snakeArr[i].x==rect.x&&snake.snakeArr[i].y==rect.y){
@@ -138,7 +138,7 @@ function getRandomFood(){
 
 //判断是否吃到食物
 function isEat(){
-	if(snake.head.x==head.x&&snake.head.y)
+	if(snake.head.x==food.x&&snake.head.y==food.y)
 		return true;
 	else
 		return false;
