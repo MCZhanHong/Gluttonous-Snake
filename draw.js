@@ -6,7 +6,7 @@ function Rect(x,y,w,h,cr){
 	this.y=y;
 	this.w=w;
 	this.h=h;
-	this.cr=cr;
+  this.cr=cr;
 }
 //画方块的方法
 Rect.prototype.draw=function(){
